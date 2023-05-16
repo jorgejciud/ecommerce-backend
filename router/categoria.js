@@ -1,0 +1,61 @@
+const { Router } = require('express');
+const Categoria = require('../models/Categoria');
+
+const router = Router();
+
+// POST method route
+router.post('/', async function (req, res) {
+
+    try {
+
+        let categoria = new Categoria();
+        categoria.nombre = req.body.nombre;
+        categoria.fechaCreacion = new Date();
+        categoria.fechaActualizacion = new Date();
+
+        categoria = await categoria.save();
+        res.send(categoria);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Ocurrió un error');
+    }
+
+});
+
+router.get('/', async function (req, res) {
+
+    try {
+
+        const categorias = await Categoria.find();
+        res.send(categorias);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Ocurrió un error');
+    }
+
+});
+
+
+router.put('/:categoriaId', async function (req, res) {
+
+    try {
+
+        let categoria = await Categoria.findById(req.params.categoriaId);
+        if(!categoria) {
+            return res.status(400).send('No existe la categoria');
+        }
+        categoria.nombre = req.body.nombre;
+        categoria.fechaActualizacion = new Date();
+        categoria = await categoria.save();
+        res.send(categoria);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Ocurrió un error');
+    }
+
+});
+
+module.exports = router;
