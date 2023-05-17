@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const Marca = require('../models/Marca');
+const { validarMarca } = require('../helpers/validar-marca');
 
 const router = Router();
 
@@ -19,6 +20,12 @@ router.get('/', async function (req, res) {
 router.post('/', async function (req, res) {
 
     try {
+
+        const validaciones = validarMarca(req);
+
+        if (validaciones.length > 0) {
+            return res.status(400).send(validaciones);
+        }
 
         let marca = new Marca();
         marca.nombre = req.body.nombre;
