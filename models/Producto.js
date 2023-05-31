@@ -28,7 +28,7 @@ const ProductoSchema = Schema({
     },
     marca: {
         type: Schema.Types.ObjectId,
-        ref: 'Macar',
+        ref: 'Marca',
         required: true
     },
     categoria: {

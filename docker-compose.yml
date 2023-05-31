@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  ecommerce-backend-product:
+    container_name: ecommerce-backend
+    image: ecommerce-backend:v1
+    build:
+      context: .
+    ports:
+      - "4001:4001"
+    networks:
+      - ecommerce-app
+  
+networks: 
+  ecommerce-app:
